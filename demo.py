@@ -14,6 +14,8 @@ cifar100 = CIFAR100(root=os.path.expanduser("~/.cache"), download=True, train=Fa
 def classify(img, user_text):
     image = preprocess(img).unsqueeze(0).to(device)
     user_texts = user_text.split(",")
+    if user_text == "" or user_text.isspace():
+        user_texts = []
     text_sources = cifar100.classes + user_texts
     text_inputs = torch.cat([clip.tokenize(f"a photo of a {c}") for c in text_sources]).to(device)
 
